@@ -1,4 +1,5 @@
 # source: https://pyimagesearch.com/2016/01/18/multiple-cameras-with-the-raspberry-pi-and-opencv/#:~:text=When%20building%20a%20Raspberry%20Pi,least%20one%20USB%20web%20camera
+# source code for VideoStream class: https://github.com/PyImageSearch/imutils/blob/master/imutils/video/videostream.py
 
 from __future__ import print_function
 from imutils.video import VideoStream
