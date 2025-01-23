@@ -1,0 +1,19 @@
+from picamera import PiCamera
+from pathlib import Path
+
+camera = PiCamera()
+recordFile = Path("record.txt")
+picFile = Path("picture.txt")
+
+recordingStarted = False
+
+while True:
+	if recordFile.exists() and not recordingStarted:
+		camera.start_recording('video.h264')
+		recordingStarted = True
+	elif not recordFile.exists() and recordingStarted:
+		camera.stop_recording()
+		recordingStarted = False
+	elif picFile.exists():
+		camera.capture('image.jpg')
+		picFile.unlink()
