@@ -1,3 +1,6 @@
+### WORKS AS OF 2/9/2025
+### records video with usb cam
+
 import cv2
 
 # Attempt to use the V4L2 backend explicitly
