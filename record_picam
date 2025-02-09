@@ -1,0 +1,5 @@
+### WORKS AS OF 2/9
+### records video
+
+from picamzero import Camera
+cam.record_video(f"{home_dir}/Desktop/new_video.mp4", duration=5)
