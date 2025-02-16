@@ -1,10 +1,18 @@
-### WORKS AS OF 2/16/2025
-### records video with usb cam
+### records picam, then usbcam, but not concurrently
 
 import cv2
 from datetime import datetime
 import os
 import shutil
+from picamzero import Camera
+from time import sleep
+
+# picamera
+cam = Camera()
+print("recording picam")
+cam.record_video('./test3.mp4', duration=5)
+
+# usb camera
 
 # Attempt to use the V4L2 backend explicitly
 cap = cv2.VideoCapture(1, cv2.CAP_V4L2)
@@ -29,7 +37,7 @@ file_name = str_current_datetime+".avi"
 fourcc = cv2.VideoWriter_fourcc(*'XVID')
 out = cv2.VideoWriter(file_name, fourcc, 20.0, (640, 480))
 
-print("Recording... Press 'q' to stop.")
+print("Recording usb... Press 'q' to stop.")
 
 while True:
     ret, frame = cap.read()
