@@ -6,7 +6,7 @@ import serial
 import picamera2
 
 recording = False
-cam = picamera.PiCamera()
+cam = picamera2.PiCamera()
 
 ser = serial.Serial(
         port='/dev/ttyS0',

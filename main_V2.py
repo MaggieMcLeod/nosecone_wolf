@@ -30,7 +30,7 @@ class USB_camera_control:
 
 class PI_camera_control:
     def __init__(self):
-        self.cam = picamera.PiCamera() # picamera setup
+        self.cam = picamera2.PiCamera() # picamera setup
 
     def record(self):
       self.cam.start_recording('my_video.h264')
