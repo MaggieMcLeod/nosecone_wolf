@@ -7,7 +7,7 @@ import os
 import shutil
 
 # Attempt to use the V4L2 backend explicitly
-cap = cv2.VideoCapture(1, cv2.CAP_V4L2)
+cap = cv2.VideoCapture(0, cv2.CAP_V4L2)
 
 if not cap.isOpened():
     print("Error: Could not open camera with CAP_V4L2.")
@@ -36,7 +36,7 @@ while True:
     if not ret:
         print("Failed to grab frame")
         break
-
+    print("frame")
     # Write frame to file
     out.write(frame)
 
@@ -47,15 +47,6 @@ while True:
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
-# Move video file to USB_videos folder
-### NOTE while the file naming timestamps work, moving to the video folder
-# is not working. Fix this later.
-source = '/home/pi/'+file_name
-destination = '/home/pi/USB_videos'
- 
-src_path = os.path.join(source, f)
-dst_path = os.path.join(destination, f)
-shutil.move(src_path, dst_path)
 
 # Clean up
 cap.release()
