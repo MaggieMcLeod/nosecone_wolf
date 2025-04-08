@@ -14,8 +14,8 @@ class USB_camera_control:
         self.cap = cv2.VideoCapture(0, cv2.CAP_V4L2)
         self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
         self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
-        self.fourcc = cv2.VideoWriter_fourcc(*'XVID')
-        self.out = cv2.VideoWriter('output.avi', self.fourcc, 20.0, (640, 480))
+        self.fourcc = cv2.VideoWriter_fourcc('M', 'J', 'P', 'G')
+        self.out = cv2.VideoWriter('pdf.mjpg', self.fourcc, 30.0, (640, 480))
 
     def stop(self):
         self.cap.release()
@@ -30,7 +30,7 @@ class PI_camera_control:
       video_config = self.cam.create_video_configuration()
       self.cam.configure(video_config)
       encoder = H264Encoder(bitrate=10000000)
-      output = "my_video.h264"
+      output = "pdf.h264"
       self.cam.start_recording(encoder, output)
       #TODO put in timestamps
       # old from picamzero:  self.cam.record_video(f"./", duration=120)
@@ -39,7 +39,6 @@ class PI_camera_control:
         self.cam.start_preview(Preview.QTGL, x=0, y=0, width=720, height=480)
                            # default values: x=100, y=200, width=800, height=600
         transform=Transform(hflip=1)
-        self.cam.start()
 
 
 def main():
