@@ -16,7 +16,7 @@ class USB_camera_control:
         self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
         self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
         self.fourcc = cv2.VideoWriter_fourcc(*'XVID')
-        self.out = cv2.VideoWriter('pdf_post.avi', self.fourcc, 20.0, (640, 480))
+        self.out = cv2.VideoWriter('frr.avi', self.fourcc, 10.0, (640, 480))
 
     def stop(self):
         self.cap.release()
@@ -44,6 +44,16 @@ class PI_camera_control:
       transform=Transform(hflip=1)
       self.cam.start()
 
+def usb_test(usb):
+    x = 0
+    while True:
+        x += 1
+        ret, frame = usb.cap.read()
+        print("frame" + str(x))
+        if not ret:
+            print("failed")
+        usb.out.write(frame)
+
 def main():
     usb = USB_camera_control()
     pi = PI_camera_control()
@@ -68,6 +78,11 @@ def main():
             if (b"start" in x) and (not recording):
                 recording = True
                 print("recording")
+                if not piStarted:
+                    pi.record()
+                    piStarted = True
+                    x = threading.Thread(target=usb_test, args=(usb,), daemon = True)
+                    x.start()
 
             elif (b"stop" in x) and (recording):
                 recording = False
@@ -75,19 +90,9 @@ def main():
                 piStarted = False
                 print("recording stopped")
                 # does picamera stop?
-
-        if recording:
-
-            ret, frame = usb.cap.read()
-            print("frame")
-            if not ret:
-                print("failed")
-            usb.out.write(frame)
-
+            x = b''
             # # Display the frame
             #
-            if not piStarted:
-                pi.record()
-                piStarted = True
+            
 
 main()
